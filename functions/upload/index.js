@@ -504,9 +504,16 @@ async function uploadFileToTelegram(context, fullId, metadata, fileExt, fileName
         sendFunction = { 'url': 'sendDocument', 'type': 'document' };
     }
 
+    /*
     // 根据服务端压缩设置处理接口：从参数中获取serverCompress，如果为false，则使用sendDocument接口
     if (url.searchParams.get('serverCompress') === 'false') {
         sendFunction = { 'url': 'sendDocument', 'type': 'document' };
+    }
+    */
+
+    // Telegram 图片统一使用文件模式，避免照片压缩
+    if (mimeType.startsWith('image/')) {
+    sendFunction = { 'url': 'sendDocument', 'type': 'document' };
     }
 
     // 上传文件到 Telegram
